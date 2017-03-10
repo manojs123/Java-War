@@ -1,7 +1,6 @@
 package week3;
 
-public class LinkedList 
-{
+public class LinkedList {
 	private static Node head;
 
 	private int size;
@@ -27,6 +26,21 @@ public class LinkedList
 	public void clearList() {
 		head.setLink(null);
 	}
+	
+	public int remove() //For Dequeue for my QUEUE Implementation// 
+    {
+        if (isEmpty() ){
+        	System.out.println("EMPTY");
+        }
+            
+        Node ptr = head;
+        head = ptr.getLink();        
+        if (head == null)
+             return (Integer) null;
+        size-- ;        
+        return ptr.getData();
+    }  
+	
 
 	public void add(int data) {
 		Node newNode = new Node(data);
@@ -48,101 +62,101 @@ public class LinkedList
 	}
 
 	public void removeAtEnd() {
-
 		if (size == 0) {
 			System.out.println("List is empty");
 
 		} else {
-			
+
 			Node current = head;
 			Node link = head.getLink();
-			while (link != null) 
-			{
+			while (link != null) {
 				current = link;
-				link = link.getLink().getLink();
+				link = link.getLink();
+				if (link.getLink().getLink() == null) {
+					current = link;
+					break;
+				}
+
 			}
+			size--;
 			current.setLink(null);
 		}
 
 	}
 	
-	public Node insert(Node head, int data, int position) 
-	{
+
+	public Node insert(Node head, int data, int position) {
 		Node newNode = new Node();
-	    newNode.data = data;
-	    newNode.link = null;
+		newNode.data = data;
+		newNode.link = null;
 
-	    if(head == null && position != 0) 
-	    {
-	        return head;
-	    } 
-	    else if(head == null && position == 0) 
-	    {
-	        head = newNode;
-	        return head;
-	    }
-	    if(position == 0) 
-	    {
-	        newNode.n = head;
-	        head = newNode;
-	        return head;
-	    }
+		if (head == null && position != 0) {
+			return head;
+		} else if (head == null && position == 0) {
+			head = newNode;
+			return head;
+		}
+		if (position == 0) {
+			newNode.n = head;
+			head = newNode;
+			return head;
+		}
 
-	    Node current = head;
-	    Node previous = null;
-	    int i = 0;
+		Node current = head;
+		Node previous = null;
+		int i = 0;
 
-	    for(i = 0; i < position; i++) {
-	        previous = current;
-	        current = current.link;
-	        if(current == null)
-	            break;
-	    }
+		for (i = 0; i < position; i++) {
+			previous = current;
+			current = current.link;
+			if (current == null)
+				break;
+		}
 
-	    newNode.link = current;
-	    previous.link = newNode;
-	    size++;
-	    return head;
+		newNode.link = current;
+		previous.link = newNode;
+		size++;
+		return head;
 
 	}
-	
-	void deleteNode(int position)
-    {
-        if (head == null)
-            return;
- 
-        Node temp = head;
- 
-        // If head needs to be removed
-        if (position == 0)
-        {
-            head = temp.link;   // Change head
-            return;
-        }
- 
-        for (int i=0; temp!=null && i<position-1; i++) // Finding the previous node of the node to be deleted
-            temp = temp.link;
- 
-        if (temp == null || temp.link == null)
-            return;
- 
-        Node next = temp.link.link;  // Node temp->next is the node to be deleted
-        							// Store pointer to the next of node to be deleted
- 
-        temp.link = next;  
-     }
-	
-	 public boolean search(Node head, int x)
-	    {
-	        Node current = head;    //Initialize current
-	        while (current != null)
-	        {
-	            if (current.data == x)
-	                return true;    //data found
-	            current = current.link;
-	        }
-	        return false;   //data not found
-	    }
+
+	void deleteNode(int position) {
+		if (head == null)
+			return;
+
+		Node temp = head;
+
+		// If head needs to be removed
+		if (position == 0) {
+			head = temp.link; // Change head
+			return;
+		}
+
+		for (int i = 0; temp != null && i < position - 1; i++) // Finding the
+																// previous node
+																// of the node
+																// to be deleted
+			temp = temp.link;
+
+		if (temp == null || temp.link == null)
+			return;
+
+		Node next = temp.link.link; // Node temp->next is the node to be deleted
+									// Store pointer to the next of node to be
+									// deleted
+
+		temp.link = next;
+	}
+
+	public boolean search(Node head, int x) {
+		Node current = head; // Initialize current
+		while (current != null) {
+			if (current.data == x)
+				return true; // data found
+			current = current.link;
+		}
+		return false; // data not found
+	}
 
 	public void printList() {
 		if (size == 0)
@@ -156,7 +170,6 @@ public class LinkedList
 			}
 		}
 	}
-	
 
 	public static void main(String[] args) {
 		LinkedList list = new LinkedList();
@@ -171,10 +184,11 @@ public class LinkedList
 		list.deleteNode(3);
 		list.search(head, 7);
 		list.insert(head, 7, 5);
-		list.removeAtEnd();
-		//list.removeAtEnd();
 		list.printList();
-		
+		list.removeAtEnd();
+		// list.removeAtEnd();
+		list.printList();
+
 	}
 
 }
